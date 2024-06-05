@@ -19,12 +19,13 @@ public class LoginGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginGUI
      */
-    private static final String ARCHIVO_USUARIOS = "Usuarios.txt";
+    private static final String ARCHIVO_GERENTE = "Gerente.txt";
+
     public LoginGUI() {
-        
+
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +61,7 @@ public class LoginGUI extends javax.swing.JFrame {
         contraTxt.setBorder(null);
         getContentPane().add(contraTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 270, 40));
 
-        BtnEntrar.setText("jLabel2");
+        BtnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnEntrarMouseClicked(evt);
@@ -68,18 +69,34 @@ public class LoginGUI extends javax.swing.JFrame {
         });
         getContentPane().add(BtnEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 550, 230, 50));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Multimedia/Login.jpg"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Login.jpg"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEntrarMouseClicked
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_USUARIOS, true))) {
-            bw.write(usuarioTxt.getText() + "," + new String(contraTxt.getPassword()));
-            bw.newLine();
+        boolean valido = false;
+        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_GERENTE))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                String usuario = partes[0];
+                String contraseñaAlmacenada = partes[1];
+                if (usuario.equals(usuarioTxt.getText()) && contraseñaAlmacenada.equals(new String(contraTxt.getPassword()))) {
+                    valido = true;
+                }
+            }
         } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo de usuarios: " + e.getMessage());
+            System.err.println("Error al leer el archivo de gerentes: " + e.getMessage());
+        }
+        if (valido) {
+
+            Inventario n = new Inventario();
+            n.setVisible(valido);
+            this.dispose();
+
         }
     }//GEN-LAST:event_BtnEntrarMouseClicked
 

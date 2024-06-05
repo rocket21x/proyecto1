@@ -94,10 +94,11 @@ public class MenuGUI extends javax.swing.JFrame {
         });
         getContentPane().add(BtnHistorialVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 230, 140));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Multimedia/Menu.jpg"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Menu.jpg"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnHistorialVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialVentasMouseClicked
@@ -105,7 +106,9 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHistorialVentasMouseClicked
 
     private void BtnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInventarioMouseClicked
-        // TODO add your handling code here:
+        LoginGUI n = new LoginGUI();
+        n.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInventarioMouseClicked
 
     private void BtnCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCuentasMouseClicked
@@ -117,7 +120,9 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCorteCajaMouseClicked
 
     private void BtnRegistrarTrabajadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarTrabajadorMouseClicked
-        // TODO add your handling code here:
+        LoginGUI n = new LoginGUI();
+        n.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnRegistrarTrabajadorMouseClicked
 
     private void BtnRegistrarPromoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarPromoMouseClicked
@@ -125,7 +130,7 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistrarPromoMouseClicked
 
     private void BtnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnSalirMouseClicked
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_BtnSalirMouseClicked
 
     /**
