@@ -24,6 +24,8 @@ public class LoginGUI extends javax.swing.JFrame {
     public LoginGUI() {
 
         initComponents();
+        usuarioTxt.setBackground(new java.awt.Color(0,0,0,1));
+        contraTxt.setBackground(new java.awt.Color(0,0,0,1));
     }
 
     /**
@@ -44,7 +46,7 @@ public class LoginGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         usuarioTxt.setBackground(new java.awt.Color(50, 53, 52));
-        usuarioTxt.setFont(new java.awt.Font("Bangers", 0, 18)); // NOI18N
+        usuarioTxt.setFont(new java.awt.Font("Bangers", 0, 36)); // NOI18N
         usuarioTxt.setForeground(new java.awt.Color(255, 255, 255));
         usuarioTxt.setToolTipText("");
         usuarioTxt.setBorder(null);
@@ -53,13 +55,13 @@ public class LoginGUI extends javax.swing.JFrame {
                 usuarioTxtActionPerformed(evt);
             }
         });
-        getContentPane().add(usuarioTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 270, 40));
+        getContentPane().add(usuarioTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 270, 40));
 
         contraTxt.setBackground(new java.awt.Color(50, 53, 52));
-        contraTxt.setFont(new java.awt.Font("Bangers", 0, 12)); // NOI18N
+        contraTxt.setFont(new java.awt.Font("Bangers", 0, 24)); // NOI18N
         contraTxt.setForeground(new java.awt.Color(255, 255, 255));
         contraTxt.setBorder(null);
-        getContentPane().add(contraTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 270, 40));
+        getContentPane().add(contraTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 270, 40));
 
         BtnEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
