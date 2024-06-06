@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -98,7 +99,9 @@ public class LoginGUI extends javax.swing.JFrame {
             Inventario n = new Inventario();
             n.setVisible(valido);
             this.dispose();
-
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"No es valido este usuario");
         }
     }//GEN-LAST:event_BtnEntrarMouseClicked
 
