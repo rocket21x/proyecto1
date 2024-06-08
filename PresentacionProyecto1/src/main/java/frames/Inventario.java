@@ -1,6 +1,7 @@
 
 package frames;
 
+import java.awt.Color;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import paqueteExportar.InventarioNegocio;
@@ -16,6 +17,20 @@ public class Inventario extends javax.swing.JFrame {
         initComponents();
         
         inventarioNegocio = new InventarioNegocio();
+        
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setLocationByPlatform(false);
+
+
+        txtId.setBackground(new Color(0, 0, 0, 0));
+        txtId.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        txtNombre.setBackground(new Color(0, 0, 0, 0));
+        txtNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        txtPrecio.setBackground(new Color(0, 0, 0, 0));
+        txtPrecio.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        txtStock.setBackground(new Color(0, 0, 0, 0));
+        txtStock.setBorder(javax.swing.BorderFactory.createEmptyBorder());
     }
 
 
@@ -102,10 +117,10 @@ public class Inventario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 390, 150, 30));
-        jPanel1.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 232, 150, 20));
-        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 192, 150, 20));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 150, 20));
-        jPanel1.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 150, 20));
+        jPanel1.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 232, 140, 20));
+        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 192, 140, 30));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 140, 20));
+        jPanel1.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 140, 20));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoInventario.jpg"))); // NOI18N
         jPanel1.add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 490));
