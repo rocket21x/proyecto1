@@ -11,6 +11,6 @@ package com.mycompany.fachadaagregar;
 public class FachadaAgregar {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
     }
 }
