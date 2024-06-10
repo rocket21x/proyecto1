@@ -10,10 +10,34 @@ public class AgregarProducto implements IControlAgregar {
 
     @Override
     public void AgregarProducto(ProductoDTO producto) throws AgregarProductoException {
+        validarProducto(producto);
         productos.add(producto);
     }
 
     public List<ProductoDTO> obtenerProductos() {
         return productos;
+    }
+    
+    private void validarProducto(ProductoDTO producto) throws AgregarProductoException {
+        // Validación de campos obligatorios
+        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+            throw new AgregarProductoException("El nombre del producto es obligatorio.");
+        }
+        if (producto.getDescripcion() == null || producto.getDescripcion().trim().isEmpty()) {
+            throw new AgregarProductoException("La descripción del producto es obligatoria.");
+        }
+        if (producto.getPrecio() < 0) {
+            throw new AgregarProductoException("El precio del producto no puede ser negativo.");
+        }
+        if (producto.getStock() < 0) {
+            throw new AgregarProductoException("El stock del producto no puede ser negativo.");
+        }
+
+        // Validación de valores únicos
+        for (ProductoDTO p : productos) {
+            if (p.getId() == producto.getId()) {
+                throw new AgregarProductoException("El ID del producto debe ser único.");
+            }
+        }
     }
 }
