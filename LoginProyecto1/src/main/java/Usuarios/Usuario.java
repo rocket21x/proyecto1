@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Usuarios;
 
-/**
- *
- * @author jesus
- */
 public class Usuario {
-     private int pin;
+    private int pin;
     private String contraseña;
 
     public Usuario(int pin, String contraseña) {
@@ -21,8 +13,16 @@ public class Usuario {
         return pin;
     }
 
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
     public String getContraseña() {
         return contraseña;
     }
-    
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
 }
+
