@@ -106,7 +106,7 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHistorialVentasMouseClicked
 
     private void BtnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInventarioMouseClicked
-        LoginGUI n = new LoginGUI();
+        LoguinGUI n = new LoguinGUI();
         n.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnInventarioMouseClicked
@@ -120,7 +120,7 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCorteCajaMouseClicked
 
     private void BtnRegistrarTrabajadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarTrabajadorMouseClicked
-        LoginGUI n = new LoginGUI();
+        LoguinGUI n = new LoguinGUI();
         n.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnRegistrarTrabajadorMouseClicked
