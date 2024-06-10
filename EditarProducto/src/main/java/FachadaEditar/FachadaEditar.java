@@ -1,7 +1,7 @@
 package FachadaEditar;
 
 import ControlEditar.ControlEditar;
-import com.mycompany.productodto.ProductoDTO;
+import DTOs.ProductoDTO;
 
 public class FachadaEditar {
     private ControlEditar control;

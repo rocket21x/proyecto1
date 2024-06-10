@@ -1,9 +1,7 @@
 package ControlEditar;
 
-import com.mycompany.productodto.ProductoDTO;
+import DTOs.ProductoDTO;
 
 public interface ControlEditar {
     void editarProducto(ProductoDTO producto);
 }
-
-

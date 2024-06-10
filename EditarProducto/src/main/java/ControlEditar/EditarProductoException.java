@@ -5,4 +5,3 @@ public class EditarProductoException extends Exception {
         super(mensaje);
     }
 }
-
