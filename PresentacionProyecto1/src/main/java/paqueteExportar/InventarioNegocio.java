@@ -1,7 +1,10 @@
 
 package paqueteExportar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,21 +12,49 @@ import java.util.Map;
  */
 public class InventarioNegocio {
     
-    private Map<Producto, Integer> productos;
+private List<ProductoDTO> listaProductos;
 
     public InventarioNegocio() {
-        this.productos = new HashMap<>();
+        listaProductos = new ArrayList<>();
     }
 
-    public void agregarProducto(Producto producto, int cantidad) {
-        productos.put(producto, productos.getOrDefault(producto, 0) + cantidad);
+    public void agregarProducto(ProductoDTO producto, int stock) {
+        listaProductos.add(producto);
     }
 
-    public void actualizarStock(Producto producto, int cantidad) {
-        productos.put(producto, cantidad);
+    public void eliminarProducto(int idProducto) {
+        
+        Iterator<ProductoDTO> iterator = listaProductos.iterator();
+        while (iterator.hasNext()) {
+            ProductoDTO producto = iterator.next();
+            if (producto.getId() == idProducto) {
+                iterator.remove();
+                break;
+            }
+        }
     }
 
-    public Map<Producto, Integer> getProductos() {
-        return productos;
+    public void actualizaProducto(int idProducto, ProductoDTO productoActualizado, int nuevoStock) {
+        
+        for (ProductoDTO producto : listaProductos) {
+            if (producto.getId() == idProducto) {
+                
+                producto.setNombre(productoActualizado.getNombre());
+                producto.setPrecio(productoActualizado.getPrecio());
+                producto.setStock(nuevoStock);
+                break;
+            }
+        }
+    }
+
+    public boolean existeProducto(int id) {
+        for (ProductoDTO producto : listaProductos) {
+            if (producto.getId() == id) {
+                return true;}
+        } return false;
+    }
+    
+    public List<ProductoDTO> getProductos() {
+        return listaProductos;
     }
 }

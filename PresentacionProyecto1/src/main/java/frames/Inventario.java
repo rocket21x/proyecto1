@@ -2,10 +2,23 @@
 package frames;
 
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.util.List;
 import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import paqueteExportar.InventarioNegocio;
-import paqueteExportar.Producto;
+import paqueteExportar.ProductoDTO;
 
 public class Inventario extends javax.swing.JFrame {
 
@@ -31,6 +44,49 @@ public class Inventario extends javax.swing.JFrame {
         txtPrecio.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         txtStock.setBackground(new Color(0, 0, 0, 0));
         txtStock.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        
+        
+        ProductoDTO producto1 = new ProductoDTO(1, "Pizza Peperoni", 120, 20);
+        ProductoDTO producto2 = new ProductoDTO(2, "Pizza Jamon", 110, 25);
+        ProductoDTO producto3 = new ProductoDTO(3, "Fetuccini Alfredo", 100, 30);
+        ProductoDTO producto4 = new ProductoDTO(4, "Queso Fundido", 80, 20);
+        ProductoDTO producto5 = new ProductoDTO(5, "Spagueti Bolognesa", 100, 20);
+        
+        inventarioNegocio.agregarProducto(producto1, producto1.getStock());
+        inventarioNegocio.agregarProducto(producto2, producto2.getStock());
+        inventarioNegocio.agregarProducto(producto3, producto3.getStock());
+        inventarioNegocio.agregarProducto(producto4, producto4.getStock());
+        inventarioNegocio.agregarProducto(producto5, producto5.getStock());
+        actualizarTabla();
+        
+        
+        
+        //Validaciones regulares
+        
+        txtId.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {validarCampos();}
+            public void removeUpdate(DocumentEvent e) {validarCampos();}
+            public void insertUpdate(DocumentEvent e) {validarCampos();}});
+
+        txtPrecio.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {validarCampos();}
+            public void removeUpdate(DocumentEvent e) {validarCampos();}
+            public void insertUpdate(DocumentEvent e) {validarCampos();}});
+
+        txtStock.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {validarCampos();}
+            public void removeUpdate(DocumentEvent e) {validarCampos();}
+            public void insertUpdate(DocumentEvent e) {validarCampos();}});
+        
+        txtId.setDocument(new javax.swing.text.PlainDocument());
+        ((javax.swing.text.PlainDocument) txtId.getDocument()).setDocumentFilter(new NumberDocumentFilter());
+        
+        txtPrecio.setDocument(new javax.swing.text.PlainDocument());
+        ((javax.swing.text.PlainDocument) txtPrecio.getDocument()).setDocumentFilter(new NumberDocumentFilter());
+        
+        txtStock.setDocument(new javax.swing.text.PlainDocument());
+        ((javax.swing.text.PlainDocument) txtStock.getDocument()).setDocumentFilter(new NumberDocumentFilter());
+
     }
 
 
@@ -151,42 +207,168 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         
-        
+        int filaSeleccionada = tablaInventario.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para editar", "Alerta", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
+
+        // Obtener los datos del producto seleccionado
+        int id = (int) model.getValueAt(filaSeleccionada, 0);
+        String nombre = (String) model.getValueAt(filaSeleccionada, 1);
+        double precio = (double) model.getValueAt(filaSeleccionada, 2);
+        int stock = (int) model.getValueAt(filaSeleccionada, 3);
+
+        JPanel panel = new JPanel(new GridLayout(4, 2));
+        JTextField txtId = new JTextField(String.valueOf(id));
+        txtId.setEditable(false);
+        txtId.setBackground(new Color(240, 240, 240));
+        JTextField txtNombre = new JTextField(nombre);
+        JTextField txtPrecio = new JTextField(String.valueOf(precio));
+        JTextField txtStock = new JTextField(String.valueOf(stock));
+
+        panel.add(new JLabel("ID:"));
+        panel.add(txtId);
+        panel.add(new JLabel("Nombre:"));
+        panel.add(txtNombre);
+        panel.add(new JLabel("Precio:"));
+        panel.add(txtPrecio);
+        panel.add(new JLabel("Stock:"));
+        panel.add(txtStock);
+
+        int resultado = JOptionPane.showConfirmDialog(this, panel, "Editar Producto",
+                                                      JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            
+            int nuevoId = Integer.parseInt(txtId.getText());
+            String nuevoNombre = txtNombre.getText();
+            double nuevoPrecio = Double.parseDouble(txtPrecio.getText());
+            int nuevoStock = Integer.parseInt(txtStock.getText());
+
+            // Actualizar el producto en InventarioNegocio
+            ProductoDTO productoActualizado = new ProductoDTO(nuevoId, nuevoNombre, nuevoPrecio, nuevoStock);
+            inventarioNegocio.actualizaProducto(id, productoActualizado, nuevoStock);
+
+            // Actualizar la fila en la tabla con los nuevos datos
+            model.setValueAt(nuevoId, filaSeleccionada, 0);
+            model.setValueAt(nuevoNombre, filaSeleccionada, 1);
+            model.setValueAt(nuevoPrecio, filaSeleccionada, 2);
+            model.setValueAt(nuevoStock, filaSeleccionada, 3);
+        }
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        // Obtener valores de los campos de entrada
+        
+        // Validar que ninguno de los campos esté vacío
+        if (!validarCampos()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Verificar si la ID ya existe en la lista de productos
         int id = Integer.parseInt(txtId.getText());
-        String nombre = txtId.getText();
-        double precio = Double.parseDouble(txtPrecio.getText());
+        if (inventarioNegocio.existeProducto(id)) {
+            JOptionPane.showMessageDialog(this, "Ya existe un producto con la misma ID", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Obtener los datos del nuevo producto
+        int precio = Integer.parseInt(txtPrecio.getText());
         int stock = Integer.parseInt(txtStock.getText());
 
-        Producto producto = new Producto(id, nombre, precio, stock);
+        // Crear el nuevo producto y agregarlo al inventario
+        ProductoDTO producto = new ProductoDTO(id, txtNombre.getText(), precio, stock);
         inventarioNegocio.agregarProducto(producto, stock);
         actualizarTabla();
+
+        // Limpiar los campos después de agregar el producto
+        txtId.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+
+        // Deshabilitar el botón de agregar hasta que se ingresen nuevos datos
+        btnAgregar.setEnabled(false);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarReporteMouseClicked
-        
-        
+                                                                                              
+        List<ProductoDTO> productos = inventarioNegocio.getProductos();
+
+        StringBuilder reporte = new StringBuilder();
+        reporte.append("<html><body><h2>Productos en Almacén</h2>");
+        reporte.append("<table border=\"1\"><tr><th>ID</th><th>Nombre</th><th>Stock</th></tr>");
+        for (ProductoDTO producto : productos) {
+            reporte.append("<tr><td>").append(producto.getId()).append("</td>")
+                   .append("<td>").append(producto.getNombre()).append("</td>")
+                   .append("<td>").append(producto.getStock()).append("</td></tr>");
+        }
+        reporte.append("</table></body></html>");
+
+        Object[] options = { "Cancelar", "Generar Reporte" };
+        int result = JOptionPane.showOptionDialog(this, reporte.toString(), "Productos en Almacén", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+        if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(this, "Reporte generado exitosamente", "Reporte Generado", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnGenerarReporteMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        
-        
+       
+        int filaSeleccionada = tablaInventario.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar", "Alerta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
+
+            int id = (int) model.getValueAt(filaSeleccionada, 0);
+            String nombre = (String) model.getValueAt(filaSeleccionada, 1);
+            double precio = (double) model.getValueAt(filaSeleccionada, 2);
+            int stock = (int) model.getValueAt(filaSeleccionada, 3);
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Seguro que desea eliminar el producto?\n\n"
+                + "ID: " + id + "\n"
+                + "Nombre: " + nombre + "\n"
+                + "Precio: " + precio + "\n"
+                + "Stock: " + stock,
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                // Eliminar el producto de InventarioNegocio
+                inventarioNegocio.eliminarProducto(id);
+
+                // Eliminar la fila seleccionada de la tabla
+                model.removeRow(filaSeleccionada);
+            }
+        }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void actualizarTabla() {
-        
         DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
-        
-        model.setRowCount(0); // Limpiar tabla
-        Map<Producto, Integer> productos = inventarioNegocio.getProductos();
-        for (Map.Entry<Producto, Integer> entry : productos.entrySet()) {
-            Producto producto = entry.getKey();
-            Integer stock = entry.getValue();
-           model.addRow(new Object[]{producto.getId(), producto.getNombre(), producto.getPrecio(), stock});
+        model.setRowCount(0); // Limpiar la tabla
+
+        // Obtener la lista de productos del inventario
+        List<ProductoDTO> productos = inventarioNegocio.getProductos();
+
+        // Iterar sobre la lista de productos y agregar cada uno a la tabla
+        for (ProductoDTO producto : productos) {
+            model.addRow(new Object[]{producto.getId(), producto.getNombre(), producto.getPrecio(), producto.getStock()});
         }
+    }
+    
+    private boolean validarCampos() {
+        return !txtId.getText().trim().isEmpty() &&
+               !txtNombre.getText().trim().isEmpty() &&
+               !txtPrecio.getText().trim().isEmpty() &&
+               !txtStock.getText().trim().isEmpty();
     }
     
     
@@ -219,6 +401,37 @@ public class Inventario extends javax.swing.JFrame {
         });
     }
 
+    
+    class NumberDocumentFilter extends DocumentFilter {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            StringBuilder sb = new StringBuilder();
+            sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+            sb.insert(offset, string);
+            if (validate(sb.toString())) {
+                super.insertString(fb, offset, string, attr);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            StringBuilder sb = new StringBuilder();
+            sb.append(fb.getDocument().getText(0, fb.getDocument().getLength()));
+            sb.replace(offset, offset + length, text);
+            if (validate(sb.toString())) {
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        }
+
+        private boolean validate(String text) {
+            return text.isEmpty() || text.matches("\\d+(\\.\\d*)?");
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAgregar;
     private javax.swing.JLabel btnEditar;

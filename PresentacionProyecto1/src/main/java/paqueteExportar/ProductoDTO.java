@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package paqueteExportar;
 
 /**
- *
- * @author Genesis
+ * @author Equipo
  */
-public class Producto {
+public class ProductoDTO {
     private int id;
     private String nombre;
     private double precio;
     private int stock;
 
-    public Producto(int id, String nombre, double precio, int stock) {
+    public ProductoDTO(int id, String nombre, double precio, int stock) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
