@@ -8,7 +8,7 @@ import ControlEditar.EditarProducto;
 public class EditarProducto1 {
     public static void main(String[] args) {
         // Crear un objeto ProductoDTO para editar
-        ProductoDTO producto = new ProductoDTO(1, "Producto Ejemplo", 50.0, 20, "Descripción del producto");
+        ProductoDTO producto = new ProductoDTO(1, "Producto Ejemplo", 50.0, 20, "Descripcion del producto");
 
         // Crear una instancia de EditarProducto y FachadaEditar
         ControlEditar control = new EditarProducto();  // Usar EditarProducto que implementa ControlEditar
@@ -23,7 +23,7 @@ public class EditarProducto1 {
         System.out.println("Nombre: " + producto.getNombre());
         System.out.println("Precio: " + producto.getPrecio());
         System.out.println("Stock: " + producto.getStock());
-        System.out.println("Descripción: " + producto.getDescripcion());
+        System.out.println("Descripcion: " + producto.getDescripcion());
     }
 }
 

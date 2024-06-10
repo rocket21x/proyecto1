@@ -9,7 +9,7 @@ public class EditarProducto implements ControlEditar {
         producto.setNombre("Nuevo Nombre");
         producto.setPrecio(99.99);
         producto.setStock(10);
-        producto.setDescripcion("Nueva descripción del producto");
+        producto.setDescripcion("Nueva descripcion del producto");
     }
 }
 
