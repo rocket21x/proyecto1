@@ -12,7 +12,7 @@ public class AgregarProducto implements IControlAgregar {
     public void AgregarProducto(ProductoDTO producto) throws AgregarProductoException {
         validarProducto(producto);
         productos.add(producto);
-    }
+    } 
 
     public List<ProductoDTO> obtenerProductos() {
         return productos;
