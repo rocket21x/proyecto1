@@ -85,8 +85,8 @@ public class LoginGUI extends javax.swing.JFrame {
         }
         if (valido) {
 
-            Inventario n = new Inventario();
-            n.setVisible(valido);
+            MenuGUI menu = new MenuGUI();
+            menu.setVisible(valido);
             this.dispose();
         }
         else {

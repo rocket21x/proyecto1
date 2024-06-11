@@ -18,7 +18,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import paqueteExportar.InventarioNegocio;
-import paqueteExportar.ProductoDTO;
+import DTOs.ProductoDTO;
 
 public class Inventario extends javax.swing.JFrame {
 
@@ -200,8 +200,8 @@ public class Inventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-        LoginGUI n = new LoginGUI();
-        n.setVisible(true);
+        MenuGUI menu = new MenuGUI();
+        menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRegresarMouseClicked
 
@@ -216,12 +216,13 @@ public class Inventario extends javax.swing.JFrame {
 
         DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
 
-        // Obtener los datos del producto seleccionado
+        // OBTENER ATRIUBUTOS PRODUCTO SELECCIONADO
         int id = (int) model.getValueAt(filaSeleccionada, 0);
         String nombre = (String) model.getValueAt(filaSeleccionada, 1);
         double precio = (double) model.getValueAt(filaSeleccionada, 2);
         int stock = (int) model.getValueAt(filaSeleccionada, 3);
 
+        // CREACION JOPTIONPANE PARA EDITAR
         JPanel panel = new JPanel(new GridLayout(4, 2));
         JTextField txtId = new JTextField(String.valueOf(id));
         txtId.setEditable(false);
@@ -230,6 +231,7 @@ public class Inventario extends javax.swing.JFrame {
         JTextField txtPrecio = new JTextField(String.valueOf(precio));
         JTextField txtStock = new JTextField(String.valueOf(stock));
 
+        // IMPRIMIR DATOS PRODUCTO
         panel.add(new JLabel("ID:"));
         panel.add(txtId);
         panel.add(new JLabel("Nombre:"));
@@ -249,11 +251,11 @@ public class Inventario extends javax.swing.JFrame {
             double nuevoPrecio = Double.parseDouble(txtPrecio.getText());
             int nuevoStock = Integer.parseInt(txtStock.getText());
 
-            // Actualizar el producto en InventarioNegocio
+            //ACTUALIZA INVENTARIO
             ProductoDTO productoActualizado = new ProductoDTO(nuevoId, nuevoNombre, nuevoPrecio, nuevoStock);
             inventarioNegocio.actualizaProducto(id, productoActualizado, nuevoStock);
 
-            // Actualizar la fila en la tabla con los nuevos datos
+            // ACTUALIZA TABLA
             model.setValueAt(nuevoId, filaSeleccionada, 0);
             model.setValueAt(nuevoNombre, filaSeleccionada, 1);
             model.setValueAt(nuevoPrecio, filaSeleccionada, 2);
@@ -263,36 +265,31 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
         
-        // Validar que ninguno de los campos esté vacío
         if (!validarCampos()) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(this, "Todos los campos deben ser llenados", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Verificar si la ID ya existe en la lista de productos
+        //VALIDACION ID REPETIDO
         int id = Integer.parseInt(txtId.getText());
         if (inventarioNegocio.existeProducto(id)) {
+            Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(this, "Ya existe un producto con la misma ID", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Obtener los datos del nuevo producto
+        //NUEVO PRODUCTO
         int precio = Integer.parseInt(txtPrecio.getText());
         int stock = Integer.parseInt(txtStock.getText());
-
-        // Crear el nuevo producto y agregarlo al inventario
         ProductoDTO producto = new ProductoDTO(id, txtNombre.getText(), precio, stock);
         inventarioNegocio.agregarProducto(producto, stock);
         actualizarTabla();
 
-        // Limpiar los campos después de agregar el producto
         txtId.setText("");
         txtNombre.setText("");
         txtPrecio.setText("");
         txtStock.setText("");
-
-        // Deshabilitar el botón de agregar hasta que se ingresen nuevos datos
-        btnAgregar.setEnabled(false);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarReporteMouseClicked

@@ -1,6 +1,8 @@
 
 package frames;
 
+import javax.swing.JOptionPane;
+
 /**
  * @author osval
  */
@@ -118,7 +120,14 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistrarPromoMouseClicked
 
     private void BtnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnSalirMouseClicked
-        this.dispose();
+        
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Seguro que desea cerrar sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+        
+        if (respuesta == JOptionPane.YES_OPTION) {
+            LoginGUI menu = new LoginGUI();
+            menu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_BtnSalirMouseClicked
 
 
