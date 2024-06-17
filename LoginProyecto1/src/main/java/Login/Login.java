@@ -17,7 +17,7 @@ public class Login implements IAutenticar{
        public Login(ListaUsuarios listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-
+ 
     @Override
     public boolean autenticar(int pin, String contraseña) {
         Usuario usuario = listaUsuarios.buscarUsuario(pin);

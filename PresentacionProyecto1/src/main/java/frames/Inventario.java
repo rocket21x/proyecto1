@@ -1,6 +1,7 @@
 
 package frames;
 
+import ControlEditar.ControlEditar;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -19,8 +20,10 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import paqueteExportar.InventarioNegocio;
 import DTOs.ProductoDTO;
+import FachadaEditar.FachadaEditar;
 
 public class Inventario extends javax.swing.JFrame {
+    
 
     private InventarioNegocio inventarioNegocio;
     
@@ -207,6 +210,8 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         
+        
+        
         int filaSeleccionada = tablaInventario.getSelectedRow();
         if (filaSeleccionada == -1) {
             Toolkit.getDefaultToolkit().beep();
@@ -221,6 +226,8 @@ public class Inventario extends javax.swing.JFrame {
         String nombre = (String) model.getValueAt(filaSeleccionada, 1);
         double precio = (double) model.getValueAt(filaSeleccionada, 2);
         int stock = (int) model.getValueAt(filaSeleccionada, 3);
+        
+        
 
         // CREACION JOPTIONPANE PARA EDITAR
         JPanel panel = new JPanel(new GridLayout(4, 2));
@@ -254,6 +261,7 @@ public class Inventario extends javax.swing.JFrame {
             //ACTUALIZA INVENTARIO
             ProductoDTO productoActualizado = new ProductoDTO(nuevoId, nuevoNombre, nuevoPrecio, nuevoStock);
             inventarioNegocio.actualizaProducto(id, productoActualizado, nuevoStock);
+            
 
             // ACTUALIZA TABLA
             model.setValueAt(nuevoId, filaSeleccionada, 0);

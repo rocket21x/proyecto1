@@ -3,6 +3,8 @@ package ControlEditar;
 import DTOs.ProductoDTO;
 
 public class EditarProducto implements ControlEditar {
+    
+    
     @Override
     public void editarProducto(ProductoDTO producto) {
         // Implementación para editar un producto
