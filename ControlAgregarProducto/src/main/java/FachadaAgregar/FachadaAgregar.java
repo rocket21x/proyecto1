@@ -12,22 +12,16 @@ import java.util.List;
  */
 public class FachadaAgregar  {
 
-    private AgregarProducto agregarProductoControl;
+    private IControlAgregar control;
 
-    public FachadaAgregar() {
-        agregarProductoControl = new AgregarProducto();
+    public FachadaAgregar(IControlAgregar control) {
+        this.control = control;
     }
 
-    
-
-    /**
-     * Obtiene la lista de productos agregados.
-     *
-     * @return La lista de productos.
-     */
-
     public void AgregarProducto(ProductoDTO producto) throws AgregarProductoException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        control.ValidarProducto(producto);
+        control.AgregarProducto(producto);
+        
     }
 
    
