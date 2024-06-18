@@ -14,6 +14,8 @@ public interface IControlAgregar {
     
 
         public void AgregarProducto(ProductoDTO producto)throws AgregarProductoException;
+        public void ValidarProducto(ProductoDTO producto)throws AgregarProductoException;
+        
         
     
     

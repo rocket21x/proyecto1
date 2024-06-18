@@ -10,7 +10,7 @@ public class AgregarProducto implements IControlAgregar {
 
     @Override
     public void AgregarProducto(ProductoDTO producto) throws AgregarProductoException {
-        validarProducto(producto);
+        ValidarProducto(producto);
         productos.add(producto);
     } 
 
@@ -18,7 +18,9 @@ public class AgregarProducto implements IControlAgregar {
         return productos;
     }
     
-    private void validarProducto(ProductoDTO producto) throws AgregarProductoException {
+
+    @Override
+    public void ValidarProducto(ProductoDTO producto) throws AgregarProductoException {
         // Validación de campos obligatorios
         if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
             throw new AgregarProductoException("El nombre del producto es obligatorio.");
