@@ -1,14 +1,23 @@
 package ControlEliminar;
 
+
+import productoBO.ProductoBO;
 import DTOs.ProductoDTO;
 
 public class EliminarProducto implements ControlEliminar {
+    private ProductoBO productoBO;
+    private ProductoDTO productoDTO;
+
     @Override
-    public void eliminarProducto(ProductoDTO producto) throws EliminarProductoException {
-        if (producto == null) {
-            throw new EliminarProductoException("El producto no puede ser nulo");
+    public void eliminarProducto(int id) throws EliminarProductoException {
+        if (productoBO.getId() == id) {
+            productoBO = null;
+            
         }
-        // Implementación para eliminar un producto
-        System.out.println("Producto con ID " + producto.getId() + " ha sido eliminado.");
     }
+    
+    
+    
+    
+  
 }

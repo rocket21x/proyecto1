@@ -20,7 +20,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import paqueteExportar.InventarioNegocio;
 import DTOs.ProductoDTO;
-import FachadaEditar.FachadaEditar;
+//import FachadaEditar.FachadaEditar;
 
 public class Inventario extends javax.swing.JFrame {
     

@@ -11,9 +11,9 @@ public class FachadaEliminar {
         this.control = control;
     }
 
-    public void eliminarProducto(ProductoDTO producto) {
+    public void eliminarProducto(int id) {
         try {
-            control.eliminarProducto(producto);
+            control.eliminarProducto(id);
         } catch (EliminarProductoException e) {
             e.printStackTrace();
         }

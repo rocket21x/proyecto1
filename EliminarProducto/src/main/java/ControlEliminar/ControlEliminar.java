@@ -3,5 +3,5 @@ package ControlEliminar;
 import DTOs.ProductoDTO;
 
 public interface ControlEliminar {
-    void eliminarProducto(ProductoDTO producto) throws EliminarProductoException;
+    public void eliminarProducto(int id) throws EliminarProductoException;
 }

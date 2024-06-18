@@ -1,15 +1,31 @@
 package ControlLeer;
 
 import DTOs.ProductoDTO;
+import productoBO.ProductoBO;
 
 public class LeerProducto implements ControlLeer {
+    
+    private ProductoBO productoBO;
+    private ProductoDTO productoDTO;
+
+    public LeerProducto(ProductoBO productoBO) {
+        this.productoBO = productoBO;
+    }
+
     @Override
     public ProductoDTO leerProducto(int id) throws LeerProductoException {
-        // Aquí normalmente tendrías lógica para buscar el producto en la base de datos
-        // En este ejemplo, simplemente creamos un ProductoDTO ficticio para devolverlo
-        if (id <= 0) {
-            throw new LeerProductoException("El ID del producto debe ser un número positivo");
-        }
-        return new ProductoDTO(id, "Producto Ejemplo", 50.0, 20, "Descripcion del producto");
+        if (productoBO.getId() == id) {
+            return new ProductoDTO(
+                productoBO.getId(),
+                productoBO.getNombre(),
+                productoBO.getPrecio(),
+                productoBO.getStock(),
+                productoBO.getDescripcion());
+        
+    }
+        return null; 
+
     }
 }
+    
+
