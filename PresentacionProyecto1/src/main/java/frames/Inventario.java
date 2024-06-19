@@ -1,10 +1,21 @@
 
 package frames;
 
+import ControlAgregar.AgregarProducto;
+import Fachada.FachadaAgregar;
+import FachadaLeer.FachadaLeer;
+import FachadaEditar.FachadaEditar;
+import ControlAgregar.AgregarProductoException;
 import ControlEditar.ControlEditar;
+import ControlEditar.EditarProducto;
+import ControlLeer.ControlLeer;
+import ControlLeer.LeerProducto;
+import ControlLeer.LeerProductoException;
+import DTOs.ProductoDTO;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -18,27 +29,76 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import paqueteExportar.InventarioNegocio;
-import DTOs.ProductoDTO;
-//import FachadaEditar.FachadaEditar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import productoBO.ProductoBO;
 
 public class Inventario extends javax.swing.JFrame {
     
+    
+    //Aqui se hacen las instancias de las clases de los otros proyectos
+    private FachadaAgregar fachadaAgregar;
+    private FachadaLeer fachadaLeer;
+    private FachadaEditar fachadaEditar;
+    
+    
+//    public Inventario(ControlLeer controlLeer) {
+//        this.fachadaLeer = new FachadaLeer(controlLeer);
+//    }
 
-    private InventarioNegocio inventarioNegocio;
-    
-    
     
     public Inventario() {
         initComponents();
-        
-        inventarioNegocio = new InventarioNegocio();
+        inicializarFachadasYProductos();
+        configurarCampos();
+        actualizarTabla();
         
         setResizable(false);
         setLocationRelativeTo(null);
         setLocationByPlatform(false);
+    }
+    
+    private void inicializarFachadasYProductos() {
+        
+        try {
+            
+            
+            
+            AgregarProducto controlAgregar = new AgregarProducto();
+            this.fachadaAgregar = new FachadaAgregar(controlAgregar);
+            
+            
+            LeerProducto leerProducto = new LeerProducto();
+            this.fachadaLeer = new FachadaLeer(leerProducto);
+            
+            
+            
+            
 
+            
+            
+            //EJEMPLOS, OBJETOS MOCK
+            ProductoBO producto1 = new ProductoBO(1, "Pizza Peperoni", 120, 20);
+            ProductoBO producto2 = new ProductoBO(2, "Pizza Jamon", 110, 25);
+            ProductoBO producto3 = new ProductoBO(3, "Fetuccini Alfredo", 100, 30);
+            ProductoBO producto4 = new ProductoBO(4, "Queso Fundido", 80, 20);
+            ProductoBO producto5 = new ProductoBO(5, "Spagueti Bolognesa", 100, 20);
 
+            //MANDANDO A CLASE FACHADAAGREGAR
+            fachadaAgregar.agregarProducto(producto1);
+            fachadaAgregar.agregarProducto(producto2);
+            fachadaAgregar.agregarProducto(producto3);
+            fachadaAgregar.agregarProducto(producto4);
+            fachadaAgregar.agregarProducto(producto5);
+
+        } catch (AgregarProductoException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void configurarCampos() {
+        
+        // CAMPOS TEXTO
         txtId.setBackground(new Color(0, 0, 0, 0));
         txtId.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         txtNombre.setBackground(new Color(0, 0, 0, 0));
@@ -47,24 +107,8 @@ public class Inventario extends javax.swing.JFrame {
         txtPrecio.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         txtStock.setBackground(new Color(0, 0, 0, 0));
         txtStock.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        
-        
-        ProductoDTO producto1 = new ProductoDTO(1, "Pizza Peperoni", 120, 20);
-        ProductoDTO producto2 = new ProductoDTO(2, "Pizza Jamon", 110, 25);
-        ProductoDTO producto3 = new ProductoDTO(3, "Fetuccini Alfredo", 100, 30);
-        ProductoDTO producto4 = new ProductoDTO(4, "Queso Fundido", 80, 20);
-        ProductoDTO producto5 = new ProductoDTO(5, "Spagueti Bolognesa", 100, 20);
-        
-        inventarioNegocio.agregarProducto(producto1, producto1.getStock());
-        inventarioNegocio.agregarProducto(producto2, producto2.getStock());
-        inventarioNegocio.agregarProducto(producto3, producto3.getStock());
-        inventarioNegocio.agregarProducto(producto4, producto4.getStock());
-        inventarioNegocio.agregarProducto(producto5, producto5.getStock());
-        actualizarTabla();
-        
-        
-        
-        //Validaciones regulares
+
+        //VALIDACIONES REGULARES LOCALES
         
         txtId.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {validarCampos();}
@@ -89,16 +133,10 @@ public class Inventario extends javax.swing.JFrame {
         
         txtStock.setDocument(new javax.swing.text.PlainDocument());
         ((javax.swing.text.PlainDocument) txtStock.getDocument()).setDocumentFilter(new NumberDocumentFilter());
-
     }
+    
 
 
-    
-    
-    
-    
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,6 +217,8 @@ public class Inventario extends javax.swing.JFrame {
         jPanel1.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 232, 140, 20));
         jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 192, 140, 30));
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 140, 20));
+
+        txtId.setOpaque(true);
         jPanel1.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 140, 20));
 
         fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoInventario.jpg"))); // NOI18N
@@ -209,69 +249,70 @@ public class Inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        
-        
-        
-        int filaSeleccionada = tablaInventario.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(this, "Seleccione un producto para editar", "Alerta", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
-        DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
-
-        // OBTENER ATRIUBUTOS PRODUCTO SELECCIONADO
-        int id = (int) model.getValueAt(filaSeleccionada, 0);
-        String nombre = (String) model.getValueAt(filaSeleccionada, 1);
-        double precio = (double) model.getValueAt(filaSeleccionada, 2);
-        int stock = (int) model.getValueAt(filaSeleccionada, 3);
-        
-        
-
-        // CREACION JOPTIONPANE PARA EDITAR
-        JPanel panel = new JPanel(new GridLayout(4, 2));
-        JTextField txtId = new JTextField(String.valueOf(id));
-        txtId.setEditable(false);
-        txtId.setBackground(new Color(240, 240, 240));
-        JTextField txtNombre = new JTextField(nombre);
-        JTextField txtPrecio = new JTextField(String.valueOf(precio));
-        JTextField txtStock = new JTextField(String.valueOf(stock));
-
-        // IMPRIMIR DATOS PRODUCTO
-        panel.add(new JLabel("ID:"));
-        panel.add(txtId);
-        panel.add(new JLabel("Nombre:"));
-        panel.add(txtNombre);
-        panel.add(new JLabel("Precio:"));
-        panel.add(txtPrecio);
-        panel.add(new JLabel("Stock:"));
-        panel.add(txtStock);
-
-        int resultado = JOptionPane.showConfirmDialog(this, panel, "Editar Producto",
-                                                      JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (resultado == JOptionPane.OK_OPTION) {
-            
-            int nuevoId = Integer.parseInt(txtId.getText());
-            String nuevoNombre = txtNombre.getText();
-            double nuevoPrecio = Double.parseDouble(txtPrecio.getText());
-            int nuevoStock = Integer.parseInt(txtStock.getText());
-
-            //ACTUALIZA INVENTARIO
-            ProductoDTO productoActualizado = new ProductoDTO(nuevoId, nuevoNombre, nuevoPrecio, nuevoStock);
-            inventarioNegocio.actualizaProducto(id, productoActualizado, nuevoStock);
-            
-
-            // ACTUALIZA TABLA
-            model.setValueAt(nuevoId, filaSeleccionada, 0);
-            model.setValueAt(nuevoNombre, filaSeleccionada, 1);
-            model.setValueAt(nuevoPrecio, filaSeleccionada, 2);
-            model.setValueAt(nuevoStock, filaSeleccionada, 3);
-        }
+//        int filaSeleccionada = tablaInventario.getSelectedRow();
+//        if (filaSeleccionada == -1) {
+//            Toolkit.getDefaultToolkit().beep();
+//            JOptionPane.showMessageDialog(this, "Seleccione un producto para editar", "Alerta", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
+//
+//        // OBTENER ATRIUBUTOS PRODUCTO SELECCIONADO
+//        int id = (int) model.getValueAt(filaSeleccionada, 0);
+//        String nombre = (String) model.getValueAt(filaSeleccionada, 1);
+//        double precio = (double) model.getValueAt(filaSeleccionada, 2);
+//        int stock = (int) model.getValueAt(filaSeleccionada, 3);
+//        
+//        
+//
+//        // CREACION JOPTIONPANE PARA EDITAR
+//        JPanel panel = new JPanel(new GridLayout(4, 2));
+//        JTextField txtId = new JTextField(String.valueOf(id));
+//        txtId.setEditable(false);
+//        txtId.setBackground(new Color(240, 240, 240));
+//        JTextField txtNombre = new JTextField(nombre);
+//        JTextField txtPrecio = new JTextField(String.valueOf(precio));
+//        JTextField txtStock = new JTextField(String.valueOf(stock));
+//
+//        // IMPRIMIR DATOS PRODUCTO
+//        panel.add(new JLabel("ID:"));
+//        panel.add(txtId);
+//        panel.add(new JLabel("Nombre:"));
+//        panel.add(txtNombre);
+//        panel.add(new JLabel("Precio:"));
+//        panel.add(txtPrecio);
+//        panel.add(new JLabel("Stock:"));
+//        panel.add(txtStock);
+//
+//        int resultado = JOptionPane.showConfirmDialog(this, panel, "Editar Producto",
+//                                                      JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+//
+//        if (resultado == JOptionPane.OK_OPTION) {
+//            
+//            int nuevoId = Integer.parseInt(txtId.getText());
+//            String nuevoNombre = txtNombre.getText();
+//            double nuevoPrecio = Double.parseDouble(txtPrecio.getText());
+//            int nuevoStock = Integer.parseInt(txtStock.getText());
+//
+//            //ACTUALIZA INVENTARIO
+//            ProductoDTO productoActualizado = new ProductoDTO(nuevoId, nuevoNombre, nuevoPrecio, nuevoStock);
+//            inventarioNegocio.actualizaProducto(id, productoActualizado, nuevoStock);
+//            
+//
+//            // ACTUALIZA TABLA
+//            model.setValueAt(nuevoId, filaSeleccionada, 0);
+//            model.setValueAt(nuevoNombre, filaSeleccionada, 1);
+//            model.setValueAt(nuevoPrecio, filaSeleccionada, 2);
+//            model.setValueAt(nuevoStock, filaSeleccionada, 3);
+//        }
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        
+        
+        //VALIDACION CAMPOS VACIOS
         
         if (!validarCampos()) {
             Toolkit.getDefaultToolkit().beep();
@@ -279,21 +320,49 @@ public class Inventario extends javax.swing.JFrame {
             return;
         }
 
+        
+        
         //VALIDACION ID REPETIDO
+        
         int id = Integer.parseInt(txtId.getText());
-        if (inventarioNegocio.existeProducto(id)) {
-            Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(this, "Ya existe un producto con la misma ID", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        
+   
+        
+        ProductoBO productoBO = new ProductoBO();
+        List<ProductoBO> listaProductos = new ArrayList<>();
+        listaProductos = productoBO.getProductos();
+        
+        try {
+            if (fachadaLeer.leerProducto(id) != null) {
+                
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(this, "Ya existe un producto con la misma ID", "Error", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }
+        } catch (LeerProductoException ex) {
+            System.out.println("asasd");
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        //NUEVO PRODUCTO
+            
+           
+        
+        
+        
+        //AGREGAR NUEVO PRODUCTO
+        
         int precio = Integer.parseInt(txtPrecio.getText());
         int stock = Integer.parseInt(txtStock.getText());
-        ProductoDTO producto = new ProductoDTO(id, txtNombre.getText(), precio, stock);
-        inventarioNegocio.agregarProducto(producto, stock);
-        actualizarTabla();
+        ProductoBO producto = new ProductoBO(id, txtNombre.getText(), precio, stock);
+        
+        try {      fachadaAgregar.agregarProducto(producto);
+        } 
+        catch (AgregarProductoException ex) {Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);}
+        
 
+        
+        
+        actualizarTabla();
+        
         txtId.setText("");
         txtNombre.setText("");
         txtPrecio.setText("");
@@ -302,72 +371,79 @@ public class Inventario extends javax.swing.JFrame {
 
     private void btnGenerarReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarReporteMouseClicked
                                                                                               
-        List<ProductoDTO> productos = inventarioNegocio.getProductos();
-
-        StringBuilder reporte = new StringBuilder();
-        reporte.append("<html><body><h2>Productos en Almacén</h2>");
-        reporte.append("<table border=\"1\"><tr><th>ID</th><th>Nombre</th><th>Stock</th></tr>");
-        for (ProductoDTO producto : productos) {
-            reporte.append("<tr><td>").append(producto.getId()).append("</td>")
-                   .append("<td>").append(producto.getNombre()).append("</td>")
-                   .append("<td>").append(producto.getStock()).append("</td></tr>");
-        }
-        reporte.append("</table></body></html>");
-
-        Object[] options = { "Cancelar", "Generar Reporte" };
-        int result = JOptionPane.showOptionDialog(this, reporte.toString(), "Productos en Almacén", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-
-        if (result == JOptionPane.NO_OPTION) {
-            JOptionPane.showMessageDialog(this, "Reporte generado exitosamente", "Reporte Generado", JOptionPane.INFORMATION_MESSAGE);
-        }
+//        List<ProductoDTO> productos = inventarioNegocio.getProductos();
+//
+//        StringBuilder reporte = new StringBuilder();
+//        reporte.append("<html><body><h2>Productos en Almacén</h2>");
+//        reporte.append("<table border=\"1\"><tr><th>ID</th><th>Nombre</th><th>Stock</th></tr>");
+//        for (ProductoDTO producto : productos) {
+//            reporte.append("<tr><td>").append(producto.getId()).append("</td>")
+//                   .append("<td>").append(producto.getNombre()).append("</td>")
+//                   .append("<td>").append(producto.getStock()).append("</td></tr>");
+//        }
+//        reporte.append("</table></body></html>");
+//
+//        Object[] options = { "Cancelar", "Generar Reporte" };
+//        int result = JOptionPane.showOptionDialog(this, reporte.toString(), "Productos en Almacén", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+//
+//        if (result == JOptionPane.NO_OPTION) {
+//            JOptionPane.showMessageDialog(this, "Reporte generado exitosamente", "Reporte Generado", JOptionPane.INFORMATION_MESSAGE);
+//        }
     }//GEN-LAST:event_btnGenerarReporteMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-       
-        int filaSeleccionada = tablaInventario.getSelectedRow();
-
-        if (filaSeleccionada == -1) {
-            Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar", "Alerta", JOptionPane.ERROR_MESSAGE);
-        } else {
-            DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
-
-            int id = (int) model.getValueAt(filaSeleccionada, 0);
-            String nombre = (String) model.getValueAt(filaSeleccionada, 1);
-            double precio = (double) model.getValueAt(filaSeleccionada, 2);
-            int stock = (int) model.getValueAt(filaSeleccionada, 3);
-
-            int confirmacion = JOptionPane.showConfirmDialog(this,
-                "¿Seguro que desea eliminar el producto?\n\n"
-                + "ID: " + id + "\n"
-                + "Nombre: " + nombre + "\n"
-                + "Precio: " + precio + "\n"
-                + "Stock: " + stock,
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION);
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                // Eliminar el producto de InventarioNegocio
-                inventarioNegocio.eliminarProducto(id);
-
-                // Eliminar la fila seleccionada de la tabla
-                model.removeRow(filaSeleccionada);
-            }
-        }
+//       
+//        int filaSeleccionada = tablaInventario.getSelectedRow();
+//
+//        if (filaSeleccionada == -1) {
+//            Toolkit.getDefaultToolkit().beep();
+//            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar", "Alerta", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
+//
+//            int id = (int) model.getValueAt(filaSeleccionada, 0);
+//            String nombre = (String) model.getValueAt(filaSeleccionada, 1);
+//            double precio = (double) model.getValueAt(filaSeleccionada, 2);
+//            int stock = (int) model.getValueAt(filaSeleccionada, 3);
+//
+//            int confirmacion = JOptionPane.showConfirmDialog(this,
+//                "¿Seguro que desea eliminar el producto?\n\n"
+//                + "ID: " + id + "\n"
+//                + "Nombre: " + nombre + "\n"
+//                + "Precio: " + precio + "\n"
+//                + "Stock: " + stock,
+//                "Confirmar eliminación",
+//                JOptionPane.YES_NO_OPTION);
+//
+//            if (confirmacion == JOptionPane.YES_OPTION) {
+//                // Eliminar el producto de InventarioNegocio
+//                inventarioNegocio.eliminarProducto(id);
+//
+//                // Eliminar la fila seleccionada de la tabla
+//                model.removeRow(filaSeleccionada);
+//            }
+//        }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
+    
+    //SE RECORRE LA LISTA REGRESADA DE PRODUCTOBO Y SE IMPRIME EN LA TABLA
+    
     private void actualizarTabla() {
+        
         DefaultTableModel model = (DefaultTableModel) tablaInventario.getModel();
-        model.setRowCount(0); // Limpiar la tabla
+        model.setRowCount(0);
+        
+        ProductoBO instanciaProductoBO = new ProductoBO();
+        
+        List<ProductoBO> productos = instanciaProductoBO.getProductos();
 
-        // Obtener la lista de productos del inventario
-        List<ProductoDTO> productos = inventarioNegocio.getProductos();
-
-        // Iterar sobre la lista de productos y agregar cada uno a la tabla
-        for (ProductoDTO producto : productos) {
+        for (ProductoBO producto : productos) {
             model.addRow(new Object[]{producto.getId(), producto.getNombre(), producto.getPrecio(), producto.getStock()});
         }
     }
+    
+    
+    
     
     private boolean validarCampos() {
         return !txtId.getText().trim().isEmpty() &&
@@ -377,35 +453,6 @@ public class Inventario extends javax.swing.JFrame {
     }
     
     
-//    public static void main(String args[]) {
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Inventario().setVisible(true);
-//            }
-//        });
-//    }
-
     
     class NumberDocumentFilter extends DocumentFilter {
         @Override

@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package ControlAgregar;
 
-import DTOs.ProductoDTO;
+import java.util.List;
+import productoBO.ProductoBO;
 
 /**
- *
- * @author jesus
+ * Interfaz para el control de agregar un producto.
  */
 public interface IControlAgregar {
     
-
-        public void AgregarProducto(ProductoDTO producto)throws AgregarProductoException;
-        public void ValidarProducto(ProductoDTO producto)throws AgregarProductoException;
         
+        public void AgregarProducto(ProductoBO producto)throws AgregarProductoException;
+        public void ValidarProducto(ProductoBO producto)throws AgregarProductoException;
         
     
     

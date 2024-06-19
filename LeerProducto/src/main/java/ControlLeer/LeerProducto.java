@@ -1,31 +1,35 @@
 package ControlLeer;
 
-import DTOs.ProductoDTO;
+import java.util.List;
 import productoBO.ProductoBO;
 
 public class LeerProducto implements ControlLeer {
     
-    private ProductoBO productoBO;
-    private ProductoDTO productoDTO;
+    private List<ProductoBO> listaProductos;
 
-    public LeerProducto(ProductoBO productoBO) {
-        this.productoBO = productoBO;
+    public LeerProducto() {
+    }
+
+    
+    
+    public LeerProducto(List<ProductoBO> listaProductos) {
+        
+        System.out.println("Entro LeerProducto");
+        this.listaProductos = listaProductos;
     }
 
     @Override
-    public ProductoDTO leerProducto(int id) throws LeerProductoException {
-        if (productoBO.getId() == id) {
-            return new ProductoDTO(
-                productoBO.getId(),
-                productoBO.getNombre(),
-                productoBO.getPrecio(),
-                productoBO.getStock(),
-                productoBO.getDescripcion());
-        
-    }
-        return null; 
-
+    public ProductoBO leerProducto(int id) throws LeerProductoException {
+        for (ProductoBO producto : listaProductos) {
+            if (producto.getId() == id) {
+                return new ProductoBO(
+                    producto.getId(),
+                    producto.getNombre(),
+                    producto.getPrecio(),
+                    producto.getStock()
+                );
+            }
+        }
+        throw new LeerProductoException("Producto no encontrado con ID: " + id);
     }
 }
-    
-

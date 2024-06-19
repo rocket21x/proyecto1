@@ -1,29 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package productoBO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
- * @author jesus
+ * Clase ProductoBO
  */
 public class ProductoBO {
-    // atrubutos BO
+    
+        //ATRIBUTOS
         private int id;
         private String nombre;
         private double precio;
         private int stock;
-        private String descripcion;
-        
-    //Contructor y getters y setters para ProductoBO
+        List <ProductoBO> productos = new ArrayList<>();
 
-    public ProductoBO(int id, String nombre, double precio, int stock, String descripcion) {
+    public ProductoBO() {
+    }
+        
+        
+        
+    //CONSTRUCTOR GETTER Y SETTERS PARA PRODUCTOBO
+    public ProductoBO(ProductoBO producto) {
+        
+        this.productos.add(producto);
+    }    
+        
+    
+    
+    public ProductoBO(int id, String nombre, double precio, int stock) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.descripcion = descripcion;
+    }
+
+    public List<ProductoBO> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoBO> productos) {
+        System.out.println(productos);
+        System.out.println("asdass setproductos");
+        this.productos = productos;
     }
 
     public int getId() {
@@ -57,14 +77,5 @@ public class ProductoBO {
     public void setStock(int stock) {
         this.stock = stock;
     }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-        
     
 }

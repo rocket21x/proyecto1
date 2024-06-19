@@ -1,6 +1,9 @@
 
 package frames;
 
+import ControlAgregar.AgregarProductoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -98,7 +101,8 @@ public class MenuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHistorialVentasMouseClicked
 
     private void BtnInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInventarioMouseClicked
-        Inventario inventario = new Inventario();
+        Inventario inventario = null;
+        inventario = new Inventario();
         inventario.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnInventarioMouseClicked

@@ -1,7 +1,9 @@
 package ControlLeer;
 
-import DTOs.ProductoDTO;
+import productoBO.ProductoBO;
 
 public interface ControlLeer {
-    ProductoDTO leerProducto(int id) throws LeerProductoException;
+    
+    
+    ProductoBO leerProducto(int id) throws LeerProductoException;
 }

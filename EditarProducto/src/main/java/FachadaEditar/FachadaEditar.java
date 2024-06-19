@@ -4,8 +4,12 @@ import ControlEditar.ControlEditar;
 import DTOs.ProductoDTO;
 
 public class FachadaEditar {
+    
     private ControlEditar control;
 
+    public FachadaEditar() {
+    }
+    
     public FachadaEditar(ControlEditar control) {
         this.control = control;
     }
