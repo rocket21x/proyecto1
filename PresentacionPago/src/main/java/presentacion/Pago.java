@@ -24,6 +24,7 @@ public class Pago extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BtnTarjeta = new javax.swing.JLabel();
         BtnAtras = new javax.swing.JLabel();
         BtnEfectivo = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
@@ -32,6 +33,14 @@ public class Pago extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        BtnTarjeta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnTarjeta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnTarjetaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(BtnTarjeta, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 500, 100, 50));
 
         BtnAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnAtras.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -61,14 +70,20 @@ public class Pago extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnAtrasMouseClicked
 
     private void BtnEfectivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEfectivoMouseClicked
-    new Efectivo().setVisible(true);
-    dispose();
+        new Efectivo().setVisible(true);
+        dispose();
     }//GEN-LAST:event_BtnEfectivoMouseClicked
+
+    private void BtnTarjetaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnTarjetaMouseClicked
+        new Tarjeta().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BtnTarjetaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BtnAtras;
     private javax.swing.JLabel BtnEfectivo;
+    private javax.swing.JLabel BtnTarjeta;
     private javax.swing.JLabel Fondo;
     // End of variables declaration//GEN-END:variables
 }

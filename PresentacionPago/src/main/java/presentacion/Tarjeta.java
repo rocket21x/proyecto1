@@ -8,13 +8,14 @@ package presentacion;
  *
  * @author osval
  */
-public class Efectivo extends javax.swing.JFrame {
+public class Tarjeta extends javax.swing.JFrame {
 
     /**
-     * Creates new form Efectivo
+     * Creates new form Tarjeta
      */
-    public Efectivo() {
+    public Tarjeta() {
         initComponents();
+        transparenciaBtn();
         setLocationRelativeTo(null);
     }
 
@@ -28,9 +29,11 @@ public class Efectivo extends javax.swing.JFrame {
     private void initComponents() {
 
         BtnAtras = new javax.swing.JLabel();
-        Fondo = new javax.swing.JLabel();
+        BtnAceptar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -42,8 +45,11 @@ public class Efectivo extends javax.swing.JFrame {
         });
         getContentPane().add(BtnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 500, 90, 40));
 
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/pago_EF.jpg"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        BtnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/AceptarBtn.png"))); // NOI18N
+        getContentPane().add(BtnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 180, 90));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/M/pago_TAR.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -52,9 +58,16 @@ public class Efectivo extends javax.swing.JFrame {
         dispose();
         new Pago().setVisible(true);
     }//GEN-LAST:event_BtnAtrasMouseClicked
+    public void transparenciaBtn(){
+        BtnAceptar.setOpaque(false);
+        BtnAceptar.setContentAreaFilled(false);
+        BtnAceptar.setBorderPainted(false);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAceptar;
     private javax.swing.JLabel BtnAtras;
-    private javax.swing.JLabel Fondo;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,6 @@
-package presentacion;
+package MAIN;
+
+import presentacion.Pago;
 
 /**
  *
