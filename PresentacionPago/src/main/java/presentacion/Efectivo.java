@@ -4,26 +4,23 @@
  */
 package presentacion;
 
+import entity.Pago;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author osval
- */
 public class Efectivo extends javax.swing.JFrame {
 
+    private Pago pago;
     private String noOrden;
     private String mesa;
     private String platillos;
     private String total;
-    private Pago pago;
 
     public Efectivo(Pago pago, String noOrden, String mesa, String platillos, String total) {
         initComponents();
         transparenciaBtn();
         setLocationRelativeTo(null);
 
-        this.pago = pago; // Asignar referencia de Pago
+        this.pago = pago;
         this.noOrden = noOrden;
         this.mesa = mesa;
         this.platillos = platillos;
@@ -149,23 +146,33 @@ public class Efectivo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnAceptarMouseClicked
-        dispose();
+        javax.swing.JTable tablaPago = pago.getTablaPago();
 
-        // Obtener el número de orden seleccionado desde Pago
-        int filaSeleccionada = pago.getTablaPago().getSelectedRow();
+        int filaSeleccionada = tablaPago.getSelectedRow();
 
         if (filaSeleccionada != -1) {
-            String noOrden = pago.getTablaPago().getValueAt(filaSeleccionada, 0).toString();
+            String noOrden = tablaPago.getValueAt(filaSeleccionada, 0).toString();
 
-            // Crear instancia de Confirmacion pasando el Pago y el número de orden
-            Confirmacion confirmacion = new Confirmacion(pago, noOrden);
-            confirmacion.setVisible(true);
+            try {
+                double monto = Double.parseDouble(txtTotal.getText());
+
+                // Crear el objeto Pago y guardarlo usando el DAO
+                Pago nuevoPago = new Pago(0, monto, "Pago en efectivo"); // El ID se asignará automáticamente
+                
+                Confirmacion confirmacion = new Confirmacion(pago, noOrden);
+                confirmacion.setVisible(true);
+                dispose();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Error en el formato del monto.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila primero.");
         }
     }//GEN-LAST:event_BtnAceptarMouseClicked
 
     private void BtnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnSalirMouseClicked
         dispose();
-        new Pago().setVisible(true);
+        new PagoInicio().setVisible(true);
     }//GEN-LAST:event_BtnSalirMouseClicked
 
     private void txtPagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagoKeyPressed

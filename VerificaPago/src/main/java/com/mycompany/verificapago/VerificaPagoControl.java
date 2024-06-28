@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.verificapago;
 
 /**
@@ -17,9 +13,7 @@ public class VerificaPagoControl {
     }
 
     // Método para iniciar la verificación de un pago
-    public boolean iniciarVerificacion(String numeroTarjeta, double monto) {
-        boolean resultado = verificador.verificarPago(numeroTarjeta, monto);
-        // Aquí podrían añadirse más lógica según sea necesario
-        return resultado;
+    public boolean iniciarVerificacion(String numeroTarjeta, double monto, String vcc, String fechaCaducidad) {
+        return verificador.verificarPago(numeroTarjeta, monto, vcc, fechaCaducidad);
     }
 }

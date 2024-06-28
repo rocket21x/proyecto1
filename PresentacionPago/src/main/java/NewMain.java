@@ -1,5 +1,5 @@
 
-import presentacion.Pago;
+import presentacion.PagoInicio;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,7 +16,7 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Pago().setVisible(true);
+        new PagoInicio().setVisible(true);
     }
     
 }

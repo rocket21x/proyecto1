@@ -9,6 +9,6 @@ package com.mycompany.verificapago;
  * @author osval
  */
 public interface IVerificaPago {
-    boolean verificarPago(String numeroTarjeta, double monto);
 
+    boolean verificarPago(String numeroTarjeta, double monto, String vcc, String fechaCaducidad);
 }
